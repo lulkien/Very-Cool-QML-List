@@ -28,7 +28,7 @@ Window {
             Text {
                 anchors.centerIn: parent
                 font.pixelSize: 30
-                text: "-"
+                text: "<"
             }
             MouseArea {
                 enabled: !root.buttonDisabled
@@ -47,7 +47,7 @@ Window {
             Text {
                 anchors.centerIn: parent
                 font.pixelSize: 30
-                text: "+"
+                text: ">"
             }
             MouseArea {
                 enabled: !root.buttonDisabled

@@ -15,7 +15,7 @@ Item {
             { idx: (currentIndex + list_view.count - 3) % list_view.count,   x: 70,    z: 1,   alpha: 1,   originX: 0,     angle: 46.1  },
             { idx: (currentIndex + list_view.count - 2) % list_view.count,   x: 120,   z: 2,   alpha: 1,   originX: 0,     angle: 46.1  },
             { idx: (currentIndex + list_view.count - 1) % list_view.count,   x: 170,   z: 3,   alpha: 1,   originX: 0,     angle: 46.1  },
-            { idx: currentIndex,                                             x: 490,   z: 3,   alpha: 0,   originX: 150,   angle: 0     },
+            { idx: currentIndex,                                             x: 490,   z: 3,   alpha: 1,   originX: 150,   angle: 0     },
             { idx: (currentIndex + 1) % list_view.count,                     x: 810,   z: 3,   alpha: 1,   originX: 300,   angle: -46.1 },
             { idx: (currentIndex + 2) % list_view.count,                     x: 860,   z: 2,   alpha: 1,   originX: 300,   angle: -46.1 },
             { idx: (currentIndex + 3) % list_view.count,                     x: 910,   z: 1,   alpha: 1,   originX: 300,   angle: -46.1 },
