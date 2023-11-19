@@ -11,15 +11,15 @@ Item {
         id: self
         property int currentIndex: 0
         property var layoutData: [
-            { idx: (currentIndex + list_view.count - 4) % list_view.count,   x: 20,    z: 0,   alpha: 1,   originX: 0,     angle: 46.1  },
-            { idx: (currentIndex + list_view.count - 3) % list_view.count,   x: 70,    z: 1,   alpha: 1,   originX: 0,     angle: 46.1  },
-            { idx: (currentIndex + list_view.count - 2) % list_view.count,   x: 120,   z: 2,   alpha: 1,   originX: 0,     angle: 46.1  },
-            { idx: (currentIndex + list_view.count - 1) % list_view.count,   x: 170,   z: 3,   alpha: 1,   originX: 0,     angle: 46.1  },
-            { idx: currentIndex,                                             x: 490,   z: 3,   alpha: 1,   originX: 150,   angle: 0     },
-            { idx: (currentIndex + 1) % list_view.count,                     x: 810,   z: 3,   alpha: 1,   originX: 300,   angle: -46.1 },
-            { idx: (currentIndex + 2) % list_view.count,                     x: 860,   z: 2,   alpha: 1,   originX: 300,   angle: -46.1 },
-            { idx: (currentIndex + 3) % list_view.count,                     x: 910,   z: 1,   alpha: 1,   originX: 300,   angle: -46.1 },
-            { idx: (currentIndex + 4) % list_view.count,                     x: 960,   z: 0,   alpha: 1,   originX: 300,   angle: -46.1 },
+            { idx: (currentIndex + list_view.count - 4) % list_view.count,   x: 20,    z: 0,   alpha: 1,   originX: 0,     angle: 46.1,    centered: false },
+            { idx: (currentIndex + list_view.count - 3) % list_view.count,   x: 70,    z: 1,   alpha: 1,   originX: 0,     angle: 46.1,    centered: false },
+            { idx: (currentIndex + list_view.count - 2) % list_view.count,   x: 120,   z: 2,   alpha: 1,   originX: 0,     angle: 46.1,    centered: false },
+            { idx: (currentIndex + list_view.count - 1) % list_view.count,   x: 170,   z: 3,   alpha: 1,   originX: 0,     angle: 46.1,    centered: false },
+            { idx: currentIndex,                                             x: 280,   z: -1,  alpha: 1,   originX: 360,   angle: 0,       centered: true  },
+            { idx: (currentIndex + 1) % list_view.count,                     x: 810,   z: 3,   alpha: 1,   originX: 300,   angle: -46.1,   centered: false },
+            { idx: (currentIndex + 2) % list_view.count,                     x: 860,   z: 2,   alpha: 1,   originX: 300,   angle: -46.1,   centered: false },
+            { idx: (currentIndex + 3) % list_view.count,                     x: 910,   z: 1,   alpha: 1,   originX: 300,   angle: -46.1,   centered: false },
+            { idx: (currentIndex + 4) % list_view.count,                     x: 960,   z: 0,   alpha: 1,   originX: 300,   angle: -46.1,   centered: false },
         ]
 
         function initLayout() {
@@ -29,28 +29,42 @@ Item {
                 list_view.itemAt(item.idx).z = item.z
                 list_view.itemAt(item.idx).originX = item.originX
                 list_view.itemAt(item.idx).angle = item.angle
+                list_view.itemAt(item.idx).itemSize = item.centered ? 720 : 300
+                list_view.itemAt(item.idx).markCentered(item.centered)
             })
         }
 
         function increaseCurrentIndex() {
             currentIndex = (currentIndex + 1) % list_view.count
             layoutData.forEach(function(item, index) {
+                if (item.centered) {
+                    list_view.itemAt(item.idx).moveItemToCenter(item.x, item.z, item.alpha, item.originX, item.angle)
+                    return
+                }
+
                 if (index === list_view.count - 1) {
                     list_view.itemAt(item.idx).moveItemToLast(item.x, item.z, item.alpha, item.originX, item.angle)
-                } else {
-                    list_view.itemAt(item.idx).animateToNewState(item.x, item.z, item.alpha, item.originX, item.angle)
+                    return
                 }
+
+                list_view.itemAt(item.idx).animateToNewState(item.x, item.z, item.alpha, item.originX, item.angle)
             })
         }
 
         function decreaseCurrentIndex() {
             currentIndex = (currentIndex + list_view.count - 1) % list_view.count
             layoutData.forEach(function(item, index) {
+                if (item.centered) {
+                    list_view.itemAt(item.idx).moveItemToCenter(item.x, item.z, item.alpha, item.originX, item.angle)
+                    return
+                }
+
                 if (index === 0) {
                     list_view.itemAt(item.idx).moveItemToFirst(item.x, item.z, item.alpha, item.originX, item.angle)
-                } else {
-                    list_view.itemAt(item.idx).animateToNewState(item.x, item.z, item.alpha, item.originX, item.angle)
+                    return
                 }
+
+                list_view.itemAt(item.idx).animateToNewState(item.x, item.z, item.alpha, item.originX, item.angle)
             })
         }
     }
